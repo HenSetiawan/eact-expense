@@ -1,12 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600&display=swap");
 
 .font-jakarta-sans {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    color: #A5A5A5;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.font-secondary {
+  color: #a5a5a5 !important;
+}
+
+.link-item {
+  font-weight: 600;
+  font-size: 16px;
+  color: #a5a5a5;
+}
+
+.title-name {
+  color: #01002e;
 }
 
 .font-active {
-    color: #0038D9;
+  color: #0038d9;
+}
+
+.balance-card {
+    background-image: url('../images/background.png');
+    height: 190px;
+    border-radius: 15px;
+}
+
+.balance-title {
+    color: white;
+    font-size: 14px;
+}
+
+.balance-number {
+    color: white;
+    font-size: 26px;
+}
+
+.button-balance {
+    background-color: #0038d9;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.button-balance:hover {
+    color: white;
+}
+
+.wallet-icon {
+    width: 66px;
+    height: 66px;
 }
