@@ -4,11 +4,11 @@ import CashflowCard from "./components/balance/CashflowCard";
 import { Container, Row, Col } from "react-bootstrap";
 function App() {
   return (
-    <div className="App">
+    <div className="App mx-auto">
       <Navigationbar />
       <Container className="mt-5">
         <Row>
-          <Col lg={8} xs={12}>
+          <Col lg={12} xs={12}>
             <div className="welcome-card">
               <h2 className="font-jakarta-sans">Welcome Dikamsi 👌🏼</h2>
               <p className="font-jakarta-sans font-secondary">

@@ -10,7 +10,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 function Navigationbar() {
   return (
-      <Navbar expand="lg" className="shadow-sm py-3">
+      <Navbar expand="lg" className="py-3">
         <Container>
           <Navbar.Brand href="#home">
             <img src={brand} alt="wallet logo"/>
