@@ -26,36 +26,48 @@
 }
 
 .balance-card {
-    background-image: url('../images/background.png');
-    height: 190px;
-    border-radius: 15px;
+  background-image: url("../images/background.png");
+  height: 190px;
+  border-radius: 15px;
 }
 
 .balance-title {
-    color: white;
-    font-size: 14px;
+  color: white;
+  font-size: 14px;
 }
 
 .balance-number {
-    color: white;
-    font-size: 26px;
+  color: white;
+  font-size: 26px;
 }
 
 .button-balance {
-    background-color: #0038d9;
-    border: none;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
+  background-color: #0038d9;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
 }
 
 .button-balance:hover {
-    color: white;
+  color: white;
 }
 
 .wallet-icon {
-    width: 66px;
-    height: 66px;
+  width: 66px;
+  height: 66px;
+}
+
+.transaction-title {
+  padding: 0 !important;
+  margin: 0;
+}
+
+.transaction-date {
+  color: #a5a5a5;
+  font-size: 12px;
+  padding: 0 !important;
+  margin: 0;
 }
 
 @media only screen and (min-width: 768px) {

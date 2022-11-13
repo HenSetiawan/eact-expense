@@ -1,6 +1,7 @@
 import Navigationbar from "./components/navbar/Navigationbar";
 import Balancecard from "./components/balance/index";
 import CashflowCard from "./components/balance/CashflowCard";
+import Transaction from "./components/transaction/index";
 import { Container, Row, Col } from "react-bootstrap";
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
             <Balancecard />
           </Col>
         </Row>
-        <Row>
+        <Row className="mt-5">
           <CashflowCard/>
+          <Transaction/>
         </Row>
       </Container>
     </div>

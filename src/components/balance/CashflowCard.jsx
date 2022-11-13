@@ -5,7 +5,7 @@ import wallet from "../../assets/images/wallet.svg";
 
 function CashflowCard() {
   return (
-    <Col lg={6} className="mt-5">
+    <Col lg={6}>
       <Card className="p-4 font-jakarta-sans">
         <div className="head-cashflow d-flex align-items-center justify-content-between">
           <h2>This Month</h2>
