@@ -7,10 +7,10 @@ function index() {
       <p className="balance-number">₦1,100,000,000.00</p>
       <a className="button-balance me-3 p-2" href="#">
         {" "}
-        View Accounts &rarr;
+        Add New Income &rarr;
       </a>
       <a className="button-balance p-2" href="">
-        Send Money &rarr;
+        Add New Expense &rarr;
       </a>
     </div>
   );

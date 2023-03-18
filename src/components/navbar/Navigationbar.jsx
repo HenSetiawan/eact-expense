@@ -6,6 +6,7 @@ import { BiWallet } from "react-icons/bi";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { NavLink } from "react-router-dom";
 
 
 function Navigationbar() {
@@ -18,10 +19,34 @@ function Navigationbar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link href="#home" className="font-jakarta-sans link-item me-5 font-active"><FaHome className="mb-1" /> Home</Nav.Link>
-              <Nav.Link href="#link" className="font-jakarta-sans link-item me-5"><FiBarChart className="mb-1"/> Expense</Nav.Link>
-              <Nav.Link href="#link" className="font-jakarta-sans link-item me-5"><BiWallet className="mb-1" /> Income</Nav.Link>
-              <Nav.Link href="#link" className="font-jakarta-sans link-item me-5"><FiSettings className="mb-1" /> Settings</Nav.Link>
+              <NavLink
+                to="/"
+                className={({ isActive}) => isActive ? "font-active font-jakarta-sans link-item me-5 mt-2 text-decoration-none" : "font-jakarta-sans link-item me-5 mt-2 text-decoration-none"
+                  }>
+                <FaHome className="mb-1" />
+                Home
+              </NavLink>
+              <NavLink
+                to="/expense"
+                className={({ isActive}) => isActive ? "font-active font-jakarta-sans link-item me-5 mt-2 text-decoration-none" : "font-jakarta-sans link-item me-5 mt-2 text-decoration-none"
+                  }>
+                <FiBarChart className="mb-1" />
+                Expense
+              </NavLink>
+              <NavLink
+                to="/income"
+                className={({ isActive}) => isActive ? "font-active font-jakarta-sans link-item me-5 mt-2 text-decoration-none" : "font-jakarta-sans link-item me-5 mt-2 text-decoration-none"
+                  }>
+                <BiWallet className="mb-1" />
+                Income
+              </NavLink>
+              <NavLink
+                to="/setting"
+                className={({ isActive}) => isActive ? "font-active font-jakarta-sans link-item me-5 mt-2 text-decoration-none" : "font-jakarta-sans link-item me-5 mt-2 text-decoration-none"
+                  }>
+                <FiSettings className="mb-1" />
+                Setting
+              </NavLink>
             </Nav>
           </Navbar.Collapse>
         <div className="profile me-5">

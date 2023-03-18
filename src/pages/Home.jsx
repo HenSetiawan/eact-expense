@@ -1,6 +1,5 @@
 import Balancecard from "../components/balance/index";
-import CashflowCard from "../components/balance/CashflowCard";
-import Transaction from "../components/transaction/index";
+import TransactionList from "../components/transaction/TransactionList";
 import { Row, Col } from "react-bootstrap";
 function App() {
   return (
@@ -17,8 +16,12 @@ function App() {
           </Col>
         </Row>
         <Row className="mt-5">
-          <CashflowCard/>
-          <Transaction/>
+          <Col lg={6} xs={12}>
+          <TransactionList title="Recent Income"/>
+          </Col>
+          <Col lg={6} xs={12}>
+          <TransactionList title="Recent Expense"/>
+          </Col>
         </Row>
     </div>
   );
