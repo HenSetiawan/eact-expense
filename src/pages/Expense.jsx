@@ -34,19 +34,24 @@ function App() {
         </Modal.Header>
         <Modal.Body>
          <div class="mb-3">
-            <label for="expense-name" class="form-label mt-2">Expense Name</label>
-            <input type="text" class="form-control" id="expense-name" placeholder="expense name"/>
-            <label for="expense-date" class="form-label mt-2">Expense Date</label>
-            <input type="date" class="form-control" id="expense-date" placeholder="expense date"/>
-            <label for="expense-name" class="form-label mt-2">Amount Money</label>
-            <input type="number" class="form-control" id="amount-money" placeholder="amount money"/>
+            <label htmlFor="expense-name" className="form-label mt-2">Expense Name</label>
+            <input type="text" className="form-control" id="expense-name" placeholder="expense name"/>
+            <label htmlFor="expense-date" className="form-label mt-2">Expense Date</label>
+            <input type="date" className="form-control" id="expense-date" placeholder="expense date"/>
+            <label htmlFor="expense-name" className="form-label mt-2">Amount Money</label>
+            <input type="number" className="form-control" id="amount-money" placeholder="amount money"/>
+            <label htmlFor="expense-category" className="form-label mt-2">Categories</label>
+            <select name="category" id="expense-category" className="form-control">
+              <option value="food">Food</option>
+              <option value="game">Game</option>
+            </select>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button type="submit" variant="primary" onClick={handleClose}>
             Create
           </Button>
         </Modal.Footer>
