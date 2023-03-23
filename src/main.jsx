@@ -2,13 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import Home from './pages/Home'
+import Expense from './pages/Expense'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css';
 import 'react-tippy/dist/tippy.css';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
 } from "react-router-dom";
 
 
@@ -20,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/expense",
+        element: <Expense />,
       },
     ],
   },
