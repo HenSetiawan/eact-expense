@@ -1,7 +1,7 @@
 import brand from "../../assets/images/brand.svg";
 import profile from "../../assets/images/profile.png";
 import { FaHome } from "react-icons/fa";
-import { FiSettings, FiBarChart } from "react-icons/fi";
+import { FiBarChart } from "react-icons/fi";
 import { BiWallet } from "react-icons/bi";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -39,13 +39,6 @@ function Navigationbar() {
                   }>
                 <BiWallet className="mb-1" />
                 Income
-              </NavLink>
-              <NavLink
-                to="/setting"
-                className={({ isActive}) => isActive ? "font-active font-jakarta-sans link-item me-5 mt-2 text-decoration-none" : "font-jakarta-sans link-item me-5 mt-2 text-decoration-none"
-                  }>
-                <FiSettings className="mb-1" />
-                Setting
               </NavLink>
             </Nav>
           </Navbar.Collapse>
