@@ -4,16 +4,16 @@ import { BsTrash } from "react-icons/bs";
 import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tippy";
 
-function TransactionItem() {
+function TransactionItem(props) {
   return (
     <div className="transaction-item mb-4">
       <div className="d-flex">
         <img src={food} alt="food" />
         <div className="ms-4">
-          <p className="transaction-title">Krispy Kreme</p>
-          <p className="transaction-date">January 25th</p>
+          <p className="transaction-title">{props.title}</p>
+          <p className="transaction-date">{props.date}</p>
         </div>
-        <p className="ms-4">₦10,000.00</p>
+        <p className="ms-4">{props.amount}</p>
         <div className="d-flex ms-auto">
           <Tooltip
             title="Edit Transaction"

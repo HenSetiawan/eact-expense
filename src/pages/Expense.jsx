@@ -5,6 +5,7 @@ import InputText from "../components/form/InputText";
 import supabase from "../services/supabase";
 function App() {
   const [show, setShow] = useState(false);
+  const [expense, setExpense] = useState([])
 
   useEffect(() => {
     const handleRefresh = async () => {
@@ -15,6 +16,7 @@ function App() {
           return error;
         }
         console.log(expense);
+        setExpense(expense);
       } catch (error) {
         console.error(error);
         return error;
@@ -50,7 +52,7 @@ function App() {
       </Row>
       <Row className="mt-5">
         <Col lg={10} xs={12}>
-          <TransactionList title="Expense List" />
+          <TransactionList title="Expense List" data={expense} />
         </Col>
       </Row>
 
@@ -60,7 +62,7 @@ function App() {
           <Modal.Title>Create new expense</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div class="mb-3">
+          <div className="mb-3">
             <label htmlFor="expense-name" className="form-label mt-2">
               Expense Name
             </label>
