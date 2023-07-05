@@ -5,12 +5,15 @@ import InputText from "../components/form/InputText";
 import supabase from "../services/supabase";
 function App() {
   const [show, setShow] = useState(false);
-  const [expense, setExpense] = useState([])
+  const [expense, setExpense] = useState([]);
+  const [updated, setUpdated] = useState(0);
 
   useEffect(() => {
     const handleRefresh = async () => {
       try {
-        let { data: expense, error } = await supabase.from("expense").select("*");
+        let { data: expense, error } = await supabase
+          .from("expense")
+          .select("*");
         if (error) {
           console.error(error);
           return error;
@@ -23,11 +26,17 @@ function App() {
       }
     };
 
+    console.log(updated);
     handleRefresh();
-  }, []);
+  }, [updated]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleUpdated = () => {
+    setUpdated((updated) => updated + 1);
+  }
+
   return (
     <div>
       <Row>
@@ -52,7 +61,12 @@ function App() {
       </Row>
       <Row className="mt-5">
         <Col lg={10} xs={12}>
-          <TransactionList title="Expense List" data={expense} />
+          <TransactionList
+            table="expense"
+            title="Expense List"
+            data={expense}
+            handleUpdated={handleUpdated}
+          />
         </Col>
       </Row>
 

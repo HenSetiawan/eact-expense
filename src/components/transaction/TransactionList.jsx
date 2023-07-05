@@ -13,7 +13,17 @@ function TransactionList(props) {
       </div>
       <div className="transaction-list mt-5">
         {props.data.map((item) => {
-          return <TransactionItem key={item.id} title={item.name} date={item.date} amount={item.amount} />;
+          return (
+            <TransactionItem
+              handleUpdated={props.handleUpdated}
+              table={props.table}
+              id={item.id}
+              key={item.id}
+              title={item.name}
+              date={item.date}
+              amount={item.amount}
+            />
+          );
         })}
       </div>
     </Card>
