@@ -1,12 +1,38 @@
 import TransactionList from "../components/transaction/TransactionList";
 import { Row, Col, Modal, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import InputText from "../components/form/InputText";
 import supabase from "../services/supabase";
 function App() {
   const [show, setShow] = useState(false);
   const [expense, setExpense] = useState([]);
   const [updated, setUpdated] = useState(0);
+  const { register, handleSubmit } = useForm();
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleUpdated = () => {
+    setUpdated((updated) => updated + 1);
+  };
+  const onSubmit = async (data) => {
+    try {
+      const { error } = await supabase.from("expense").insert({
+        name: data.expenseName,
+        amount: data.expenseAmount,
+        categories: data.expenseCategories,
+        date: data.expenseDate,
+      });
+      handleClose();
+      if (!error) {
+        handleUpdated();
+      }
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  };
 
   useEffect(() => {
     const handleRefresh = async () => {
@@ -26,16 +52,8 @@ function App() {
       }
     };
 
-    console.log(updated);
     handleRefresh();
   }, [updated]);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleUpdated = () => {
-    setUpdated((updated) => updated + 1);
-  }
 
   return (
     <div>
@@ -77,51 +95,61 @@ function App() {
         </Modal.Header>
         <Modal.Body>
           <div className="mb-3">
-            <label htmlFor="expense-name" className="form-label mt-2">
-              Expense Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="expense-name"
-              placeholder="expense name"
-            />
-            <label htmlFor="expense-date" className="form-label mt-2">
-              Expense Date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              id="expense-date"
-              placeholder="expense date"
-            />
-            <label htmlFor="expense-name" className="form-label mt-2">
-              Amount Money
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="amount-money"
-              placeholder="amount money"
-            />
-            <label htmlFor="expense-category" className="form-label mt-2">
-              Categories
-            </label>
-            <select
-              name="category"
-              id="expense-category"
-              className="form-control"
-            >
-              <option value="food">Food</option>
-              <option value="game">Game</option>
-            </select>
+            <form>
+              <label htmlFor="expense-name" className="form-label mt-2">
+                Expense Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="expense-name"
+                placeholder="expense name"
+                {...register("expenseName")}
+              />
+              <label htmlFor="expense-date" className="form-label mt-2">
+                Expense Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                id="expense-date"
+                placeholder="expense date"
+                {...register("expenseDate")}
+              />
+              <label htmlFor="expense-name" className="form-label mt-2">
+                Amount Money
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="amount-money"
+                placeholder="amount money"
+                {...register("expenseAmount")}
+              />
+              <label htmlFor="expense-category" className="form-label mt-2">
+                Categories
+              </label>
+              <select
+                name="category"
+                id="expense-category"
+                className="form-control"
+                {...register("expenseCategories")}
+              >
+                <option value="food">Food</option>
+                <option value="game">Game</option>
+              </select>
+            </form>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="primary" onClick={handleClose}>
+          <Button
+            type="submit"
+            variant="primary"
+            onClick={handleSubmit(onSubmit)}
+          >
             Create
           </Button>
         </Modal.Footer>

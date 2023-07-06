@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import Home from './pages/Home'
 import Expense from './pages/Expense'
+import Income from './pages/Income'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css';
 import 'react-tippy/dist/tippy.css';
@@ -15,7 +16,7 @@ import {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: "/",
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/expense",
         element: <Expense />,
+      },
+      {
+        path: "/income",
+        element: <Income />,
       },
     ],
   },
