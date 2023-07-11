@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import food from "../../assets/images/food.svg";
+import expense from "../../assets/images/expense.png";
 import { BsTrash } from "react-icons/bs";
 import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tippy";
 import supabase from "../../services/supabase";
+import { useForm } from "react-hook-form";
 
 function TransactionItem(props) {
+  const { register, handleSubmit } = useForm();
   const [showDelConfirmation, setShowDelConfirmation] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
 
   const handleCloseDelConfirmation = () => {
     setShowDelConfirmation(false);
@@ -17,15 +20,20 @@ function TransactionItem(props) {
     setShowDelConfirmation(true);
   };
 
+  const handleCloseModalEdit = () => {
+    setShowModalEdit(false);
+  }
+
   const handleDelete = async (id, table) => {
     const { error } = await supabase.from(table).delete().eq("id", id);
   };
   return (
     <div className="transaction-item mb-4">
       <div className="d-flex">
-        <img src={food} alt="food" />
+        <img src={expense} alt="expense" />
         <div className="ms-4">
           <p className="transaction-title">{props.title}</p>
+          <p className="transaction-date text-capitalize">{props.category}</p>
           <p className="transaction-date">{props.date}</p>
         </div>
         <p className="ms-4">{props.amount}</p>
@@ -37,7 +45,7 @@ function TransactionItem(props) {
             theme="light"
             arrow={true}
           >
-            <button className="btn btn-sm border px-3 py-3">
+            <button className="btn btn-sm border px-3 py-3" onClick={()=>setShowModalEdit(true)}>
               <CiEdit />
             </button>
           </Tooltip>
@@ -86,6 +94,74 @@ function TransactionItem(props) {
             }}
           >
             Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal centered show={showModalEdit} onHide={handleCloseModalEdit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit expense</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="mb-3">
+            <form>
+              <label htmlFor="expense-name" className="form-label mt-2">
+                Expense Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="expense-name"
+                placeholder="expense name"
+                {...register("expenseName")}
+              />
+              <label htmlFor="expense-date" className="form-label mt-2">
+                Expense Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                id="expense-date"
+                placeholder="expense date"
+                {...register("expenseDate")}
+              />
+              <label htmlFor="expense-name" className="form-label mt-2">
+                Amount Money
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="amount-money"
+                placeholder="amount money"
+                {...register("expenseAmount")}
+              />
+              <label htmlFor="expense-category" className="form-label mt-2">
+                Categories
+              </label>
+              <select
+                name="category"
+                id="expense-category"
+                className="form-control"
+                {...register("expenseCategories")}
+              >
+                <option value="food">Food</option>
+                <option value="game">Game</option>
+                <option value="entertaiment">Entertaiment</option>
+                <option value="skincare">Skincare</option>
+                <option value="shop">Shop</option>
+              </select>
+            </form>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModalEdit}>
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            variant="primary"
+          >
+            Create
           </Button>
         </Modal.Footer>
       </Modal>

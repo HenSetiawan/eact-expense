@@ -137,6 +137,9 @@ function App() {
               >
                 <option value="food">Food</option>
                 <option value="game">Game</option>
+                <option value="entertaiment">Entertaiment</option>
+                <option value="skincare">Skincare</option>
+                <option value="shop">Shop</option>
               </select>
             </form>
           </div>

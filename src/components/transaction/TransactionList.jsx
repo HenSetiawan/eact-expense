@@ -22,6 +22,7 @@ function TransactionList(props) {
               title={item.name}
               date={item.date}
               amount={item.amount}
+              category={item.categories}
             />
           );
         })}
