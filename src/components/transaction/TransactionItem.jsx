@@ -8,7 +8,7 @@ import supabase from "../../services/supabase";
 import { useForm } from "react-hook-form";
 
 function TransactionItem(props) {
-  const { register, reset } = useForm();
+  const { register, reset, getValues } = useForm();
   const [showDelConfirmation, setShowDelConfirmation] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
 
@@ -52,6 +52,23 @@ function TransactionItem(props) {
   const handleDelete = async (id, table) => {
     const { error } = await supabase.from(table).delete().eq("id", id);
   };
+
+  const handleEditData = async (id, table, data) => {
+    if (table === 'expense') {
+          const { error } = await supabase
+            .from(table)
+            .update({
+              name: data.expenseName,
+              amount: data.expenseAmount,
+              categories: data.expenseCategories,
+              date: data.expenseDate,
+            })
+            .eq("id", id);
+          if (error) {
+            console.log(error);
+          }
+    }
+  }
   return (
     <div className="transaction-item mb-4">
       <div className="d-flex">
@@ -191,7 +208,14 @@ function TransactionItem(props) {
           <Button variant="secondary" onClick={handleCloseModalEdit}>
             Cancel
           </Button>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" onClick={
+            () => {
+              const values = getValues();
+              handleEditData(props.id, props.table, values);
+              props.handleUpdated();
+              handleCloseModalEdit();
+           }
+          }>
             Edit
           </Button>
         </Modal.Footer>
