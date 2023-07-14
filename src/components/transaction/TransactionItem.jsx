@@ -8,7 +8,7 @@ import supabase from "../../services/supabase";
 import { useForm } from "react-hook-form";
 
 function TransactionItem(props) {
-  const { register, handleSubmit } = useForm();
+  const { register, reset } = useForm();
   const [showDelConfirmation, setShowDelConfirmation] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
 
@@ -22,8 +22,33 @@ function TransactionItem(props) {
 
   const handleCloseModalEdit = () => {
     setShowModalEdit(false);
-  }
+  };
 
+  const setDefaultValueModalEdit = (table, data) => {
+    let defaultValues = {};
+    if (table === "expense") {
+      defaultValues.expenseName = data.name;
+      defaultValues.expenseDate = data.date;
+      defaultValues.expenseAmount = data.amount;
+      defaultValues.expenseCategories = data.category;
+    }
+    reset({ ...defaultValues });
+  };
+
+  const getTransactionById = async (id) => {
+    try {
+      const { data, error } = await supabase
+        .from(props.table)
+        .select("*")
+        .eq("id", id);
+      if (error) {
+        return error;
+      }
+      return data[0];
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleDelete = async (id, table) => {
     const { error } = await supabase.from(table).delete().eq("id", id);
   };
@@ -45,7 +70,16 @@ function TransactionItem(props) {
             theme="light"
             arrow={true}
           >
-            <button className="btn btn-sm border px-3 py-3" onClick={()=>setShowModalEdit(true)}>
+            <button
+              className="btn btn-sm border px-3 py-3"
+              onClick={async () => {
+                if (props.table === "expense") {
+                  const transactionData = await getTransactionById(props.id);
+                  setDefaultValueModalEdit("expense", transactionData);
+                  setShowModalEdit(true);
+                }
+              }}
+            >
               <CiEdit />
             </button>
           </Tooltip>
@@ -157,11 +191,8 @@ function TransactionItem(props) {
           <Button variant="secondary" onClick={handleCloseModalEdit}>
             Cancel
           </Button>
-          <Button
-            type="submit"
-            variant="primary"
-          >
-            Create
+          <Button type="submit" variant="primary">
+            Edit
           </Button>
         </Modal.Footer>
       </Modal>
