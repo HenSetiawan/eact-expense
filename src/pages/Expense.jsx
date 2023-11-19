@@ -14,6 +14,7 @@ function App() {
     handleSubmit,
   } = useForm();
 
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -149,6 +150,19 @@ function App() {
                   expense date is required
                 </p>
               )}
+              <label htmlFor="expense-category" className="form-label mt-2">
+                Categories
+              </label>
+              <select
+                name="category"
+                id="expense-category"
+                className="form-control"
+                {...register("expenseCategories")}
+              >
+                <option value="primary">Primary</option>
+                <option value="secondary">Secondary</option>
+                <option value="tertiary">Tertiary</option>
+              </select>
             </form>
           </div>
         </Modal.Body>

@@ -195,11 +195,9 @@ function TransactionItem(props) {
                 className="form-control"
                 {...register("expenseCategories")}
               >
-                <option value="food">Food</option>
-                <option value="game">Game</option>
-                <option value="entertaiment">Entertaiment</option>
-                <option value="skincare">Skincare</option>
-                <option value="shop">Shop</option>
+                <option value="primaty">Primary</option>
+                <option value="secondary">Secondary</option>
+                <option value="tertiary">Tertiary</option>
               </select>
             </form>
           </div>
