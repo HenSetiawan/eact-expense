@@ -140,7 +140,6 @@ function TransactionItem(props) {
             variant="primary"
             onClick={() => {
               handleDelete(props.id, props.table);
-              props.handleUpdated();
               handleCloseDelConfirmation();
             }}
           >

@@ -1,12 +1,11 @@
 import Balancecard from "../components/balance/index";
-import TransactionList from "../components/transaction/TransactionList";
+import ExpenseList from "../components/transaction/ExpenseList";
 import { Row, Col } from "react-bootstrap";
 import supabase from "../services/supabase";
 import React, { useEffect, useState } from "react";
 function App() {
   const [expense, setExpense] = useState([]);
   const [income, setIncome] = useState([]);
-  const [updated, setUpdated] = useState(0);
   useEffect(() => {
     const handleRefresh = async () => {
       try {
@@ -30,11 +29,8 @@ function App() {
     };
 
     handleRefresh();
-  }, [updated]);
+  }, []);
 
-  const handleUpdated = () => {
-    setUpdated((updated) => updated + 1);
-  };
   return (
     <div>
       <Row>
@@ -50,11 +46,9 @@ function App() {
       </Row>
       <Row className="mt-5">
         <Col lg={6} xs={12}>
-          <TransactionList handleUpdated={handleUpdated} table="income" data={income} title="Recent Income" />
         </Col>
         <Col lg={6} xs={12}>
-          <TransactionList
-            handleUpdated={handleUpdated}
+          <ExpenseList
             table="expense"
             data={expense}
             title="Recent Expense"

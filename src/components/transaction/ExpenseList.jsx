@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import TransactionItem from "./TransactionItem";
+import ExpenseItem from "./ExpenseItem";
 
 function TransactionList(props) {
   return (
@@ -14,8 +14,7 @@ function TransactionList(props) {
       <div className="transaction-list mt-5">
         {props.data.map((item) => {
           return (
-            <TransactionItem
-              handleUpdated={props.handleUpdated}
+            <ExpenseItem
               table={props.table}
               id={item.id}
               key={item.id}

@@ -1,4 +1,3 @@
-import TransactionList from "../components/transaction/TransactionList";
 import { Row, Col, Modal, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import InputText from "../components/form/InputText";
@@ -6,7 +5,6 @@ import supabase from "../services/supabase";
 function App() {
   const [show, setShow] = useState(false);
   const [income, setExpense] = useState([]);
-  const [updated, setUpdated] = useState(0);
 
   const handleRefresh = async () => {
     try {
@@ -24,14 +22,10 @@ function App() {
 
   useEffect(() => {
     handleRefresh();
-  }, [updated]);
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const handleUpdated = () => {
-    setUpdated((updated) => updated + 1);
-  };
 
   return (
     <div>
@@ -57,12 +51,6 @@ function App() {
       </Row>
       <Row className="mt-5">
         <Col lg={10} xs={12}>
-          <TransactionList
-            table="income"
-            title="Income List"
-            data={income}
-            handleUpdated={handleUpdated}
-          />
         </Col>
       </Row>
 
@@ -73,25 +61,25 @@ function App() {
         </Modal.Header>
         <Modal.Body>
           <div className="mb-3">
-            <label htmlFor="expense-name" className="form-label mt-2">
-              Expense Name
+            <label htmlFor="income-name" className="form-label mt-2">
+              Income Name
             </label>
             <input
               type="text"
               className="form-control"
-              id="expense-name"
-              placeholder="expense name"
+              id="income-name"
+              placeholder="income name"
             />
-            <label htmlFor="expense-date" className="form-label mt-2">
-              Expense Date
+            <label htmlFor="income-date" className="form-label mt-2">
+              Income Date
             </label>
             <input
               type="date"
               className="form-control"
-              id="expense-date"
-              placeholder="expense date"
+              id="income-date"
+              placeholder="income date"
             />
-            <label htmlFor="expense-name" className="form-label mt-2">
+            <label htmlFor="income-name" className="form-label mt-2">
               Amount Money
             </label>
             <input
@@ -100,17 +88,6 @@ function App() {
               id="amount-money"
               placeholder="amount money"
             />
-            <label htmlFor="expense-category" className="form-label mt-2">
-              Categories
-            </label>
-            <select
-              name="category"
-              id="expense-category"
-              className="form-control"
-            >
-              <option value="food">Food</option>
-              <option value="game">Game</option>
-            </select>
           </div>
         </Modal.Body>
         <Modal.Footer>

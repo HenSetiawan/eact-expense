@@ -1,4 +1,4 @@
-import TransactionList from "../components/transaction/TransactionList";
+import ExpenseList from "../components/transaction/ExpenseList";
 import { Row, Col, Modal, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -7,20 +7,15 @@ import supabase from "../services/supabase";
 function App() {
   const [show, setShow] = useState(false);
   const [expense, setExpense] = useState([]);
-  const [updated, setUpdated] = useState(0);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleUpdated = () => {
-    setUpdated((updated) => updated + 1);
-  };
   const onSubmit = async (data) => {
     try {
       const { error } = await supabase.from("expense").insert({
@@ -30,9 +25,6 @@ function App() {
         date: data.expenseDate,
       });
       handleClose();
-      if (!error) {
-        handleUpdated();
-      }
     } catch (error) {
       console.error(error);
       return error;
@@ -56,7 +48,7 @@ function App() {
 
   useEffect(() => {
     handleRefresh();
-  }, [updated]);
+  }, []);
 
   return (
     <div>
@@ -82,11 +74,10 @@ function App() {
       </Row>
       <Row className="mt-5">
         <Col lg={10} xs={12}>
-          <TransactionList
+          <ExpenseList
             table="expense"
             title="Expense List"
             data={expense}
-            handleUpdated={handleUpdated}
           />
         </Col>
       </Row>
