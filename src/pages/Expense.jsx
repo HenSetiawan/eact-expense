@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import supabase from "../services/supabase";
-import { fetchContent } from "../redux/features/expense/expenseSlice";
+import {
+  fetchContent,
+  insertExpense,
+} from "../redux/features/expense/expenseSlice";
 import ExpenseList from "../components/transaction/ExpenseList";
 import { Row, Col, Modal, Button } from "react-bootstrap";
 import InputText from "../components/form/InputText";
@@ -21,18 +23,8 @@ function App() {
   const handleShow = () => setShow(true);
 
   const onSubmit = async (data) => {
-    try {
-      const { error } = await supabase.from("expense").insert({
-        name: data.expenseName,
-        amount: data.expenseAmount,
-        categories: data.expenseCategories,
-        date: data.expenseDate,
-      });
-      handleClose();
-    } catch (error) {
-      console.error(error);
-      return error;
-    }
+    dispatch(insertExpense(data));
+    handleClose();
   };
 
   useEffect(() => {

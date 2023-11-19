@@ -18,6 +18,23 @@ export const fetchContent = createAsyncThunk(
   }
 );
 
+export const insertExpense = createAsyncThunk(
+  "expense/insertExpense",
+  async (data, { dispatch }) => {
+    try {
+      const { error } = await supabase.from("expense").insert({
+        name: data.expenseName,
+        amount: data.expenseAmount,
+        categories: data.expenseCategories,
+        date: data.expenseDate,
+      });
+      dispatch(fetchContent());
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 const initialState = {
   contents: [],
   isLoading: false,
@@ -25,7 +42,7 @@ const initialState = {
 };
 
 export const expenseSlice = createSlice({
-  name: "counter",
+  name: "expense",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -39,6 +56,15 @@ export const expenseSlice = createSlice({
     builder.addCase(fetchContent.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
+    });
+    builder.addCase(insertExpense.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(insertExpense.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(insertExpense.rejected, (state, action) => {
+      state.error = action.error;
     });
   },
 });
