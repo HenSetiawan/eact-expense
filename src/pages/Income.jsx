@@ -8,25 +8,21 @@ function App() {
   const [income, setExpense] = useState([]);
   const [updated, setUpdated] = useState(0);
 
-  useEffect(() => {
-    const handleRefresh = async () => {
-      try {
-        let { data: income, error } = await supabase
-          .from("income")
-          .select("*");
-        if (error) {
-          console.error(error);
-          return error;
-        }
-        console.log(income);
-        setExpense(income);
-      } catch (error) {
+  const handleRefresh = async () => {
+    try {
+      let { data: income, error } = await supabase.from("income").select("*");
+      if (error) {
         console.error(error);
         return error;
       }
-    };
+      setExpense(income);
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  };
 
-    console.log(updated);
+  useEffect(() => {
     handleRefresh();
   }, [updated]);
 

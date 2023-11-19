@@ -8,7 +8,11 @@ function App() {
   const [show, setShow] = useState(false);
   const [expense, setExpense] = useState([]);
   const [updated, setUpdated] = useState(0);
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -34,24 +38,22 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const handleRefresh = async () => {
-      try {
-        let { data: expense, error } = await supabase
-          .from("expense")
-          .select("*");
-        if (error) {
-          console.error(error);
-          return error;
-        }
-        console.log(expense);
-        setExpense(expense);
-      } catch (error) {
+  const handleRefresh = async () => {
+    try {
+      let { data: expense, error } = await supabase.from("expense").select("*");
+      if (error) {
         console.error(error);
         return error;
       }
-    };
+      console.log(expense);
+      setExpense(expense);
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  };
 
+  useEffect(() => {
     handleRefresh();
   }, [updated]);
 
@@ -101,46 +103,52 @@ function App() {
               </label>
               <input
                 type="text"
-                className="form-control"
+                className={`form-control ${
+                  errors.expenseName ? "border border-danger" : ""
+                }`}
                 id="expense-name"
                 placeholder="expense name"
-                {...register("expenseName")}
+                {...register("expenseName", { required: true })}
               />
+              {errors.expenseName?.type === "required" && (
+                <p role="alert" className="text-danger mt-2 fs-6 fst-italic">
+                  expense name is required
+                </p>
+              )}
               <label htmlFor="expense-date" className="form-label mt-2">
                 Expense Date
               </label>
               <input
                 type="date"
-                className="form-control"
+                className={`form-control ${
+                  errors.expenseDate ? "border border-danger" : ""
+                }`}
                 id="expense-date"
                 placeholder="expense date"
-                {...register("expenseDate")}
+                {...register("expenseDate", { required: true })}
               />
+              {errors.expenseDate?.type === "required" && (
+                <p role="alert" className="text-danger mt-2 fs-6 fst-italic">
+                  expense date is required
+                </p>
+              )}
               <label htmlFor="expense-name" className="form-label mt-2">
                 Amount Money
               </label>
               <input
                 type="number"
-                className="form-control"
+                className={`form-control ${
+                  errors.expenseAmount ? "border border-danger" : ""
+                }`}
                 id="amount-money"
                 placeholder="amount money"
-                {...register("expenseAmount")}
+                {...register("expenseAmount", { required: true })}
               />
-              <label htmlFor="expense-category" className="form-label mt-2">
-                Categories
-              </label>
-              <select
-                name="category"
-                id="expense-category"
-                className="form-control"
-                {...register("expenseCategories")}
-              >
-                <option value="food">Food</option>
-                <option value="game">Game</option>
-                <option value="entertaiment">Entertaiment</option>
-                <option value="skincare">Skincare</option>
-                <option value="shop">Shop</option>
-              </select>
+              {errors.expenseAmount?.type === "required" && (
+                <p role="alert" className="text-danger mt-2 fs-6 fst-italic">
+                  expense date is required
+                </p>
+              )}
             </form>
           </div>
         </Modal.Body>
