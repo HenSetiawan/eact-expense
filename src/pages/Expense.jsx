@@ -1,12 +1,16 @@
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import supabase from "../services/supabase";
+import { fetchContent } from "../redux/features/expense/expenseSlice";
 import ExpenseList from "../components/transaction/ExpenseList";
 import { Row, Col, Modal, Button } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import InputText from "../components/form/InputText";
-import supabase from "../services/supabase";
 function App() {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [expense, setExpense] = useState([]);
+  const contents = useSelector((state) => state.expense.contents);
+
   const {
     register,
     formState: { errors },
@@ -31,24 +35,9 @@ function App() {
     }
   };
 
-  const handleRefresh = async () => {
-    try {
-      let { data: expense, error } = await supabase.from("expense").select("*");
-      if (error) {
-        console.error(error);
-        return error;
-      }
-      console.log(expense);
-      setExpense(expense);
-    } catch (error) {
-      console.error(error);
-      return error;
-    }
-  };
-
   useEffect(() => {
-    handleRefresh();
-  }, []);
+    dispatch(fetchContent());
+  }, [dispatch]);
 
   return (
     <div>
@@ -74,11 +63,7 @@ function App() {
       </Row>
       <Row className="mt-5">
         <Col lg={10} xs={12}>
-          <ExpenseList
-            table="expense"
-            title="Expense List"
-            data={expense}
-          />
+          <ExpenseList table="expense" title="Expense List" data={contents} />
         </Col>
       </Row>
 

@@ -7,7 +7,7 @@ import { Tooltip } from "react-tippy";
 import supabase from "../../services/supabase";
 import { useForm } from "react-hook-form";
 
-function TransactionItem(props) {
+function ExpenseItem(props) {
   const { register, reset, getValues } = useForm();
   const [showDelConfirmation, setShowDelConfirmation] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
@@ -221,4 +221,4 @@ function TransactionItem(props) {
   );
 }
 
-export default TransactionItem;
+export default ExpenseItem;
