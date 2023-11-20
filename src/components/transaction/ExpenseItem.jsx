@@ -6,9 +6,12 @@ import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tippy";
 import supabase from "../../services/supabase";
 import { useForm } from "react-hook-form";
+import { deleteExpense } from "../../redux/features/expense/expenseSlice";
+import { useDispatch } from "react-redux";
 
 function ExpenseItem(props) {
   const { register, reset, getValues } = useForm();
+    const dispatch = useDispatch();
   const [showDelConfirmation, setShowDelConfirmation] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
 
@@ -54,8 +57,8 @@ function ExpenseItem(props) {
       console.log(error);
     }
   };
-  const handleDelete = async (id, table) => {
-    const { error } = await supabase.from(table).delete().eq("id", id);
+  const handleDelete = async (id) => {
+    dispatch(deleteExpense(id));
   };
 
   const handleEditData = async (id, table, data) => {
@@ -144,7 +147,7 @@ function ExpenseItem(props) {
             type="submit"
             variant="primary"
             onClick={() => {
-              handleDelete(props.id, props.table);
+              handleDelete(props.id);
               handleCloseDelConfirmation();
             }}
           >
