@@ -7,10 +7,11 @@ import {
 } from "../redux/features/expense/expenseSlice";
 import ExpenseList from "../components/transaction/ExpenseList";
 import { Row, Col, Modal, Button } from "react-bootstrap";
-import InputText from "../components/form/InputText";
+
 function App() {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const contents = useSelector((state) => state.expense.contents);
 
   const {
@@ -50,12 +51,29 @@ function App() {
           </button>
         </Col>
         <Col lg={10}>
-          <InputText placeholder="search expense" />
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control bg-light"
+              placeholder="search"
+              onChange={(e) => {
+                setSearchKeyword(e.target.value);
+              }}
+            />
+          </div>
         </Col>
       </Row>
       <Row className="mt-5">
         <Col lg={10} xs={12}>
-          <ExpenseList table="expense" title="Expense List" data={contents} />
+          <ExpenseList
+            table="expense"
+            title="Expense List"
+            data={contents.filter((expense) =>
+              expense.name
+                .toLowerCase()
+                .includes(searchKeyword.toLowerCase())
+            )}
+          />
         </Col>
       </Row>
 
