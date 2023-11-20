@@ -6,12 +6,15 @@ import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tippy";
 import supabase from "../../services/supabase";
 import { useForm } from "react-hook-form";
-import { deleteExpense } from "../../redux/features/expense/expenseSlice";
+import {
+  deleteExpense,
+  updateExpense,
+} from "../../redux/features/expense/expenseSlice";
 import { useDispatch } from "react-redux";
 
 function ExpenseItem(props) {
   const { register, reset, getValues } = useForm();
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [showDelConfirmation, setShowDelConfirmation] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
 
@@ -19,18 +22,6 @@ function ExpenseItem(props) {
     style: "currency",
     currency: "IDR",
   });
-
-  const handleCloseDelConfirmation = () => {
-    setShowDelConfirmation(false);
-  };
-
-  const handleShowDelConfirmation = () => {
-    setShowDelConfirmation(true);
-  };
-
-  const handleCloseModalEdit = () => {
-    setShowModalEdit(false);
-  };
 
   const setDefaultValueModalEdit = (table, data) => {
     let defaultValues = {};
@@ -61,21 +52,8 @@ function ExpenseItem(props) {
     dispatch(deleteExpense(id));
   };
 
-  const handleEditData = async (id, table, data) => {
-    if (table === "expense") {
-      const { error } = await supabase
-        .from(table)
-        .update({
-          name: data.expenseName,
-          amount: data.expenseAmount,
-          categories: data.expenseCategories,
-          date: data.expenseDate,
-        })
-        .eq("id", id);
-      if (error) {
-        console.log(error);
-      }
-    }
+  const handleEditData = async (id, data) => {
+    dispatch(updateExpense({ id, data }));
   };
   return (
     <div className="transaction-item mb-4">
@@ -117,7 +95,7 @@ function ExpenseItem(props) {
           >
             <button
               onClick={() => {
-                handleShowDelConfirmation();
+                setShowDelConfirmation(true);
               }}
               className="btn btn-sm border ms-2 px-3 py-3"
             >
@@ -129,7 +107,9 @@ function ExpenseItem(props) {
       <Modal
         centered
         show={showDelConfirmation}
-        onHide={handleCloseDelConfirmation}
+        onHide={() => {
+          setShowDelConfirmation(false);
+        }}
       >
         <Modal.Header closeButton>
           <Modal.Title>Delete Data</Modal.Title>
@@ -140,7 +120,12 @@ function ExpenseItem(props) {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDelConfirmation}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowDelConfirmation(false);
+            }}
+          >
             Cancel
           </Button>
           <Button
@@ -148,15 +133,20 @@ function ExpenseItem(props) {
             variant="primary"
             onClick={() => {
               handleDelete(props.id);
-              handleCloseDelConfirmation();
+              setShowDelConfirmation(false);
             }}
           >
             Delete
           </Button>
         </Modal.Footer>
       </Modal>
-
-      <Modal centered show={showModalEdit} onHide={handleCloseModalEdit}>
+      <Modal
+        centered
+        show={showModalEdit}
+        onHide={() => {
+          setShowModalEdit(false);
+        }}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Edit expense</Modal.Title>
         </Modal.Header>
@@ -210,7 +200,12 @@ function ExpenseItem(props) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModalEdit}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowModalEdit(false);
+            }}
+          >
             Cancel
           </Button>
           <Button
@@ -218,9 +213,8 @@ function ExpenseItem(props) {
             variant="primary"
             onClick={() => {
               const values = getValues();
-              handleEditData(props.id, props.table, values);
-              props.handleUpdated();
-              handleCloseModalEdit();
+              handleEditData(props.id, values);
+              setShowModalEdit(false);
             }}
           >
             Edit

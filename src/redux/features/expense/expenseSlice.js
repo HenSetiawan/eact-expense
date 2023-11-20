@@ -50,6 +50,29 @@ export const deleteExpense = createAsyncThunk(
   }
 );
 
+export const updateExpense = createAsyncThunk(
+  "expense/updateExpense",
+  async (params, { dispatch }) => {
+    try {
+      const { error } = await supabase
+        .from("expense")
+        .update({
+          name: params.data.expenseName,
+          amount: params.data.expenseAmount,
+          categories: params.data.expenseCategories,
+          date: params.data.expenseDate,
+        })
+        .eq("id", params.id);
+      dispatch(fetchExpense());
+      if (error) {
+        console.log(error);
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 const initialState = {
   contents: [],
   isLoading: false,
@@ -82,6 +105,9 @@ export const expenseSlice = createSlice({
       state.error = action.error;
     });
     builder.addCase(deleteExpense.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(updateExpense.fulfilled, (state) => {
       state.isLoading = false;
     });
   },
