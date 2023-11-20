@@ -5,7 +5,10 @@ export const fetchExpense = createAsyncThunk(
   "expense/fetchExpense",
   async () => {
     try {
-      let { data: expense, error } = await supabase.from("expense").select("*");
+      let { data: expense, error } = await supabase
+        .from("expense")
+        .select("*")
+        .order("created_at", { ascending: false });
       if (error) {
         console.error(error);
         return error;

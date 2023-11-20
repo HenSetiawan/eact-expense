@@ -28,7 +28,7 @@ function App() {
       <Row className="mt-5">
         <Col lg={6} xs={12}></Col>
         <Col lg={6} xs={12}>
-          <ExpenseList table="expense" data={contents} title="Recent Expense" />
+          <ExpenseList table="expense" data={contents.slice(0,2)} title="Recent Expense" />
         </Col>
       </Row>
     </div>

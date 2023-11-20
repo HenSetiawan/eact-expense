@@ -12,6 +12,11 @@ function ExpenseItem(props) {
   const [showDelConfirmation, setShowDelConfirmation] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
 
+  let IDRupiah = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  });
+
   const handleCloseDelConfirmation = () => {
     setShowDelConfirmation(false);
   };
@@ -54,21 +59,21 @@ function ExpenseItem(props) {
   };
 
   const handleEditData = async (id, table, data) => {
-    if (table === 'expense') {
-          const { error } = await supabase
-            .from(table)
-            .update({
-              name: data.expenseName,
-              amount: data.expenseAmount,
-              categories: data.expenseCategories,
-              date: data.expenseDate,
-            })
-            .eq("id", id);
-          if (error) {
-            console.log(error);
-          }
+    if (table === "expense") {
+      const { error } = await supabase
+        .from(table)
+        .update({
+          name: data.expenseName,
+          amount: data.expenseAmount,
+          categories: data.expenseCategories,
+          date: data.expenseDate,
+        })
+        .eq("id", id);
+      if (error) {
+        console.log(error);
+      }
     }
-  }
+  };
   return (
     <div className="transaction-item mb-4">
       <div className="d-flex">
@@ -78,7 +83,7 @@ function ExpenseItem(props) {
           <p className="transaction-date text-capitalize">{props.category}</p>
           <p className="transaction-date">{props.date}</p>
         </div>
-        <p className="ms-4">{props.amount}</p>
+        <p className="ms-4">{IDRupiah.format(props.amount)}</p>
         <div className="d-flex ms-auto">
           <Tooltip
             title="Edit Transaction"
@@ -205,14 +210,16 @@ function ExpenseItem(props) {
           <Button variant="secondary" onClick={handleCloseModalEdit}>
             Cancel
           </Button>
-          <Button type="submit" variant="primary" onClick={
-            () => {
+          <Button
+            type="submit"
+            variant="primary"
+            onClick={() => {
               const values = getValues();
               handleEditData(props.id, props.table, values);
               props.handleUpdated();
               handleCloseModalEdit();
-           }
-          }>
+            }}
+          >
             Edit
           </Button>
         </Modal.Footer>
