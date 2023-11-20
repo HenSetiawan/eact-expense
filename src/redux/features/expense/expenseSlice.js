@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import supabase from "../../../services/supabase";
 
-export const fetchContent = createAsyncThunk(
-  "content/fetchContent",
+export const fetchExpense = createAsyncThunk(
+  "expense/fetchExpense",
   async () => {
     try {
       let { data: expense, error } = await supabase.from("expense").select("*");
@@ -28,7 +28,7 @@ export const insertExpense = createAsyncThunk(
         categories: data.expenseCategories,
         date: data.expenseDate,
       });
-      dispatch(fetchContent());
+      dispatch(fetchExpense());
     } catch (error) {
       return error;
     }
@@ -46,14 +46,14 @@ export const expenseSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchContent.pending, (state) => {
+    builder.addCase(fetchExpense.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(fetchContent.fulfilled, (state, action) => {
+    builder.addCase(fetchExpense.fulfilled, (state, action) => {
       state.isLoading = false;
       state.contents = action.payload;
     });
-    builder.addCase(fetchContent.rejected, (state, action) => {
+    builder.addCase(fetchExpense.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
     });

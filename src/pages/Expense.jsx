@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
-  fetchContent,
+  fetchExpense,
   insertExpense,
 } from "../redux/features/expense/expenseSlice";
 import ExpenseList from "../components/transaction/ExpenseList";
@@ -28,7 +28,7 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch(fetchContent());
+    dispatch(fetchExpense());
   }, [dispatch]);
 
   return (

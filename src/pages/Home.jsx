@@ -1,34 +1,15 @@
+import { fetchExpense } from "../redux/features/expense/expenseSlice";
+import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import Balancecard from "../components/balance/index";
 import ExpenseList from "../components/transaction/ExpenseList";
 import { Row, Col } from "react-bootstrap";
-import supabase from "../services/supabase";
-import React, { useEffect, useState } from "react";
-function App() {
-  const [expense, setExpense] = useState([]);
-  const [income, setIncome] = useState([]);
-  useEffect(() => {
-    const handleRefresh = async () => {
-      try {
-        let { data: expense, expenseError } = await supabase
-          .from("expense")
-          .select("*")
-          .limit(1);
-        let { data: income, incomeError } = await supabase
-          .from("income")
-          .select("*")
-          .limit(1);
-        if (expenseError || incomeError) {
-          return expenseError || incomeError;
-        }
-        setExpense(expense);
-        setIncome(income);
-      } catch (error) {
-        console.error(error);
-        return error;
-      }
-    };
 
-    handleRefresh();
+function App() {
+  const contents = useSelector((state) => state.expense.contents);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchExpense());
   }, []);
 
   return (
@@ -45,14 +26,9 @@ function App() {
         </Col>
       </Row>
       <Row className="mt-5">
+        <Col lg={6} xs={12}></Col>
         <Col lg={6} xs={12}>
-        </Col>
-        <Col lg={6} xs={12}>
-          <ExpenseList
-            table="expense"
-            data={expense}
-            title="Recent Expense"
-          />
+          <ExpenseList table="expense" data={contents} title="Recent Expense" />
         </Col>
       </Row>
     </div>
