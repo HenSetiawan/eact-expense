@@ -34,6 +34,18 @@ export const fetchIncome = createAsyncThunk("expense/fetchIncome", async () => {
   }
 });
 
+export const deleteIncome = createAsyncThunk(
+  "expense/deleteIncome",
+  async (id, { dispatch }) => {
+    try {
+      const { error } = await supabase.from("income").delete().eq("id", id);
+      dispatch(fetchIncome());
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 const initialState = {
   contents: [],
   isLoading: false,
@@ -54,6 +66,9 @@ export const incomeSlice = createSlice({
     builder.addCase(fetchIncome.fulfilled, (state, action) => {
       state.isLoading = false;
       state.contents = action.payload;
+    });
+    builder.addCase(deleteIncome.fulfilled, (state, action) => {
+      state.isLoading = false;
     });
   },
 });

@@ -6,6 +6,7 @@ import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tippy";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { deleteIncome } from "../../redux/features/income/incomeSlice";
 
 function IncomeItem(props) {
   const { register, reset, getValues } = useForm();
@@ -21,7 +22,9 @@ function IncomeItem(props) {
   const setDefaultValueModalEdit = (data) => {};
 
   const getTransactionById = async (id) => {};
-  const handleDelete = async (id) => {};
+  const handleDelete = async (id) => {
+    dispatch(deleteIncome(id));
+  };
 
   const handleEditData = async (id, data) => {};
   return (
@@ -45,9 +48,9 @@ function IncomeItem(props) {
             <button
               className="btn btn-sm border px-3 py-3"
               onClick={async () => {
-                  const transactionData = await getTransactionById(props.id);
-                  setDefaultValueModalEdit(transactionData);
-                  setShowModalEdit(true);
+                const transactionData = await getTransactionById(props.id);
+                setDefaultValueModalEdit(transactionData);
+                setShowModalEdit(true);
               }}
             >
               <CiEdit />
