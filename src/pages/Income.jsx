@@ -65,6 +65,7 @@ function App() {
       <Row className="mt-5">
         <Col lg={10} xs={12}>
           <IncomeList
+            title="Income List"
             data={contents?.filter((income) =>
               income.name.toLowerCase().includes(searchKeyword.toLowerCase())
             )}

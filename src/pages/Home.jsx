@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import Balancecard from "../components/balance/index";
 import ExpenseList from "../components/transaction/ExpenseList";
+import IncomeList from "../components/transaction/IncomeList";
 import { Row, Col } from "react-bootstrap";
 
 function App() {
-  const contents = useSelector((state) => state.expense.contents);
+  const contentsExpense = useSelector((state) => state.expense.contents);
+  const contentsIncome = useSelector((state) => state.income.contents);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchExpense());
@@ -26,9 +28,14 @@ function App() {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col lg={6} xs={12}></Col>
         <Col lg={6} xs={12}>
-          <ExpenseList table="expense" data={contents.slice(0,2)} title="Recent Expense" />
+          <IncomeList data={contentsIncome.slice(0, 2)} title="Recent Income" />
+        </Col>
+        <Col lg={6} xs={12}>
+          <ExpenseList
+            data={contentsExpense.slice(0, 2)}
+            title="Recent Expense"
+          />
         </Col>
       </Row>
     </div>

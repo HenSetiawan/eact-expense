@@ -6,7 +6,7 @@ function IncomeList(props) {
   return (
     <Card className="p-4 mb-5 font-jakarta-sans">
       <div className="d-flex align-items-center justify-content-between transaction">
-        <h2>Income List</h2>
+        <h2>{props.title}</h2>
         <a href="" className="text-decoration-none">
           VIEW MORE
         </a>
