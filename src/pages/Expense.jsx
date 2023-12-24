@@ -67,7 +67,7 @@ function App() {
         <Col lg={10} xs={12}>
           <ExpenseList
             title="Expense List"
-            data={contents.filter((expense) =>
+            data={contents?.filter((expense) =>
               expense.name.toLowerCase().includes(searchKeyword.toLowerCase())
             )}
           />

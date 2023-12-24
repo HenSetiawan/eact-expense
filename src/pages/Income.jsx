@@ -21,6 +21,7 @@ function App() {
 
   const onSubmit = async (data) => {
     dispatch(insertIncome(data));
+    setShow(false);
   };
 
   useEffect(() => {
@@ -64,7 +65,7 @@ function App() {
       <Row className="mt-5">
         <Col lg={10} xs={12}>
           <IncomeList
-            data={contents.filter((income) =>
+            data={contents?.filter((income) =>
               income.name.toLowerCase().includes(searchKeyword.toLowerCase())
             )}
           />

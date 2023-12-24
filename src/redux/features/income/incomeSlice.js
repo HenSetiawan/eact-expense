@@ -10,7 +10,7 @@ export const insertIncome = createAsyncThunk(
         amount: data.expenseAmount,
         date: data.expenseDate,
       });
-      dispatch(fetchIncome);
+      dispatch(fetchIncome());
     } catch (error) {
       return error;
     }
@@ -46,10 +46,14 @@ export const incomeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(insertIncome.fulfilled, (state, action) => {
-       state.contents = action.payload;
+      state.contents = action.payload;
+    });
+    builder.addCase(fetchIncome.pending, (state, action) => {
+      state.isLoading = true;
     });
     builder.addCase(fetchIncome.fulfilled, (state, action) => {
-       state.contents = action.payload;
+      state.isLoading = false;
+      state.contents = action.payload;
     });
   },
 });

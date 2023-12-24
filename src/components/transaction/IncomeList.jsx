@@ -12,7 +12,7 @@ function IncomeList(props) {
         </a>
       </div>
       <div className="transaction-list mt-5">
-        {props.data.map((income) => {
+        {props.data?.map((income) => {
           return (
             <IncomeItem
               id={income.id}
