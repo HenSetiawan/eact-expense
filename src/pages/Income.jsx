@@ -1,7 +1,6 @@
 import { Row, Col, Modal, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import InputText from "../components/form/InputText";
 import { useDispatch, useSelector } from "react-redux";
 import {
   insertIncome,
@@ -50,7 +49,16 @@ function App() {
           </button>
         </Col>
         <Col lg={10}>
-          <InputText placeholder="search income" />
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control bg-light"
+              placeholder="search"
+              onChange={(e) => {
+                setSearchKeyword(e.target.value);
+              }}
+            />
+          </div>
         </Col>
       </Row>
       <Row className="mt-5">
