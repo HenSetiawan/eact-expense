@@ -6,9 +6,9 @@ export const insertIncome = createAsyncThunk(
   async (data, { dispatch }) => {
     try {
       const { error } = await supabase.from("income").insert({
-        name: data.expenseName,
-        amount: data.expenseAmount,
-        date: data.expenseDate,
+        name: data.incomeName,
+        amount: data.incomeAmount,
+        date: data.incomeDate,
       });
       dispatch(fetchIncome());
     } catch (error) {

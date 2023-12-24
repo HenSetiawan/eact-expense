@@ -19,9 +19,29 @@ function IncomeItem(props) {
     currency: "IDR",
   });
 
-  const setDefaultValueModalEdit = (data) => {};
+  const setDefaultValueModalEdit = (data) => {
+    let defaultValues = {};
+    defaultValues.incomeName = data.name;
+    defaultValues.incomeDate = data.date;
+    defaultValues.incomeAmount = data.amount;
+    reset({ ...defaultValues });
+  };
 
-  const getTransactionById = async (id) => {};
+  const getTransactionById = async (id) => {
+    try {
+      const { data, error } = await supabase
+        .from("expense")
+        .select("*")
+        .eq("id", id);
+      if (error) {
+        return error;
+      }
+      console.log(data[0]);
+      return data[0];
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleDelete = async (id) => {
     dispatch(deleteIncome(id));
   };
@@ -123,27 +143,27 @@ function IncomeItem(props) {
         <Modal.Body>
           <div className="mb-3">
             <form>
-              <label htmlFor="expense-name" className="form-label mt-2">
+              <label htmlFor="income-name" className="form-label mt-2">
                 Income Name
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="expense-name"
-                placeholder="expense name"
-                {...register("expenseName")}
+                id="income-name"
+                placeholder="income name"
+                {...register("incomeName")}
               />
-              <label htmlFor="expense-date" className="form-label mt-2">
+              <label htmlFor="income-date" className="form-label mt-2">
                 Income Date
               </label>
               <input
                 type="date"
                 className="form-control"
-                id="expense-date"
-                placeholder="expense date"
-                {...register("expenseDate")}
+                id="income-date"
+                placeholder="income date"
+                {...register("incomeDate")}
               />
-              <label htmlFor="expense-name" className="form-label mt-2">
+              <label htmlFor="income-name" className="form-label mt-2">
                 Amount Money
               </label>
               <input
@@ -151,7 +171,7 @@ function IncomeItem(props) {
                 className="form-control"
                 id="amount-money"
                 placeholder="amount money"
-                {...register("expenseAmount")}
+                {...register("incomeAmount")}
               />
             </form>
           </div>

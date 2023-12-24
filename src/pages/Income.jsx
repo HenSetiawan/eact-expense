@@ -89,11 +89,11 @@ function App() {
               }`}
               id="income-name"
               placeholder="income name"
-              {...register("expenseName", { required: true })}
+              {...register("incomeName", { required: true })}
             />
-            {errors.expenseName?.type === "required" && (
+            {errors.incomeName?.type === "required" && (
               <p role="alert" className="text-danger mt-2 fs-6 fst-italic">
-                expense name is required
+                income name is required
               </p>
             )}
             <label htmlFor="income-date" className="form-label mt-2">
@@ -102,32 +102,32 @@ function App() {
             <input
               type="date"
               className={`form-control ${
-                errors.expenseDate ? "border border-danger" : ""
+                errors.incomeDate ? "border border-danger" : ""
               }`}
               id="income-date"
               placeholder="income date"
-              {...register("expenseDate", { required: true })}
+              {...register("incomeDate", { required: true })}
             />
-            {errors.expenseDate?.type === "required" && (
+            {errors.incomeDate?.type === "required" && (
               <p role="alert" className="text-danger mt-2 fs-6 fst-italic">
-                expense date is required
+                income date is required
               </p>
             )}
-            <label htmlFor="income-name" className="form-label mt-2">
+            <label htmlFor="income-amount" className="form-label mt-2">
               Amount Money
             </label>
             <input
               type="number"
               className={`form-control ${
-                errors.expenseAmount ? "border border-danger" : ""
+                errors.incomeAmount ? "border border-danger" : ""
               }`}
               id="amount-money"
               placeholder="amount money"
-              {...register("expenseAmount", { required: true })}
+              {...register("incomeAmount", { required: true })}
             />
-            {errors.expenseAmount?.type === "required" && (
+            {errors.incomeAmount?.type === "required" && (
               <p role="alert" className="text-danger mt-2 fs-6 fst-italic">
-                expense amount is required
+                income amount is required
               </p>
             )}
           </div>
