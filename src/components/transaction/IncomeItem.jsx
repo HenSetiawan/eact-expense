@@ -6,7 +6,11 @@ import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tippy";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { deleteIncome } from "../../redux/features/income/incomeSlice";
+import supabase from "../../services/supabase";
+import {
+  deleteIncome,
+  updateIncome,
+} from "../../redux/features/income/incomeSlice";
 
 function IncomeItem(props) {
   const { register, reset, getValues } = useForm();
@@ -30,13 +34,12 @@ function IncomeItem(props) {
   const getTransactionById = async (id) => {
     try {
       const { data, error } = await supabase
-        .from("expense")
+        .from("income")
         .select("*")
         .eq("id", id);
       if (error) {
         return error;
       }
-      console.log(data[0]);
       return data[0];
     } catch (error) {
       console.log(error);
@@ -46,11 +49,13 @@ function IncomeItem(props) {
     dispatch(deleteIncome(id));
   };
 
-  const handleEditData = async (id, data) => {};
+  const handleEditData = async (id, data) => {
+    dispatch(updateIncome({ id, data }));
+  };
   return (
     <div className="transaction-item mb-4">
       <div className="d-flex">
-        <img src={expense} alt="expense" />
+        <img src={expense} alt="income" />
         <div className="ms-4">
           <p className="transaction-title">{props.title}</p>
           <p className="transaction-date text-capitalize">{props.category}</p>
