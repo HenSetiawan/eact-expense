@@ -10,11 +10,29 @@ export const insertIncome = createAsyncThunk(
         amount: data.expenseAmount,
         date: data.expenseDate,
       });
+      dispatch(fetchIncome);
     } catch (error) {
       return error;
     }
   }
 );
+
+export const fetchIncome = createAsyncThunk("expense/fetchIncome", async () => {
+  try {
+    let { data: expense, error } = await supabase
+      .from("income")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      console.error(error);
+      return error;
+    }
+    return expense;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+});
 
 const initialState = {
   contents: [],
@@ -27,8 +45,11 @@ export const incomeSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(insertIncome.rejected, (state, action) => {
-      state.error = action.error;
+    builder.addCase(insertIncome.fulfilled, (state, action) => {
+       state.contents = action.payload;
+    });
+    builder.addCase(fetchIncome.fulfilled, (state, action) => {
+       state.contents = action.payload;
     });
   },
 });
