@@ -2,28 +2,31 @@ import { Row, Col, Modal, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputText from "../components/form/InputText";
-import { useDispatch } from "react-redux";
-import { insertIncome } from "../redux/features/income/incomeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  insertIncome,
+  fetchIncome,
+} from "../redux/features/income/incomeSlice";
+import IncomeList from "../components/transaction/IncomeList";
+
 function App() {
   const [show, setShow] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-
+  const contents = useSelector((state) => state.income.contents);
   const dispatch = useDispatch();
-
-  const handleRefresh = async () => {
-  };
 
   const onSubmit = async (data) => {
     dispatch(insertIncome(data));
   };
 
   useEffect(() => {
-    handleRefresh();
-  }, []);
+    dispatch(fetchIncome());
+  }, [dispatch]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -51,7 +54,13 @@ function App() {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col lg={10} xs={12}></Col>
+        <Col lg={10} xs={12}>
+          <IncomeList
+            data={contents.filter((income) =>
+              income.name.toLowerCase().includes(searchKeyword.toLowerCase())
+            )}
+          />
+        </Col>
       </Row>
 
       {/* modal component*/}

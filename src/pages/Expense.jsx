@@ -66,12 +66,9 @@ function App() {
       <Row className="mt-5">
         <Col lg={10} xs={12}>
           <ExpenseList
-            table="expense"
             title="Expense List"
             data={contents.filter((expense) =>
-              expense.name
-                .toLowerCase()
-                .includes(searchKeyword.toLowerCase())
+              expense.name.toLowerCase().includes(searchKeyword.toLowerCase())
             )}
           />
         </Col>

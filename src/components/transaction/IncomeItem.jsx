@@ -4,15 +4,10 @@ import expense from "../../assets/images/expense.png";
 import { BsTrash } from "react-icons/bs";
 import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tippy";
-import supabase from "../../services/supabase";
 import { useForm } from "react-hook-form";
-import {
-  deleteExpense,
-  updateExpense,
-} from "../../redux/features/expense/expenseSlice";
 import { useDispatch } from "react-redux";
 
-function ExpenseItem(props) {
+function IncomeItem(props) {
   const { register, reset, getValues } = useForm();
   const dispatch = useDispatch();
   const [showDelConfirmation, setShowDelConfirmation] = useState(false);
@@ -23,36 +18,12 @@ function ExpenseItem(props) {
     currency: "IDR",
   });
 
-  const setDefaultValueModalEdit = (data) => {
-    let defaultValues = {};
-    defaultValues.expenseName = data.name;
-    defaultValues.expenseDate = data.date;
-    defaultValues.expenseAmount = data.amount;
-    defaultValues.expenseCategories = data.category;
-    reset({ ...defaultValues });
-  };
+  const setDefaultValueModalEdit = (data) => {};
 
-  const getTransactionById = async (id) => {
-    try {
-      const { data, error } = await supabase
-        .from('expense')
-        .select("*")
-        .eq("id", id);
-      if (error) {
-        return error;
-      }
-      return data[0];
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleDelete = async (id) => {
-    dispatch(deleteExpense(id));
-  };
+  const getTransactionById = async (id) => {};
+  const handleDelete = async (id) => {};
 
-  const handleEditData = async (id, data) => {
-    dispatch(updateExpense({ id, data }));
-  };
+  const handleEditData = async (id, data) => {};
   return (
     <div className="transaction-item mb-4">
       <div className="d-flex">
@@ -74,9 +45,9 @@ function ExpenseItem(props) {
             <button
               className="btn btn-sm border px-3 py-3"
               onClick={async () => {
-                const transactionData = await getTransactionById(props.id);
-                setDefaultValueModalEdit(transactionData);
-                setShowModalEdit(true);
+                  const transactionData = await getTransactionById(props.id);
+                  setDefaultValueModalEdit(transactionData);
+                  setShowModalEdit(true);
               }}
             >
               <CiEdit />
@@ -144,13 +115,13 @@ function ExpenseItem(props) {
         }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit expense</Modal.Title>
+          <Modal.Title>Edit Income</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="mb-3">
             <form>
               <label htmlFor="expense-name" className="form-label mt-2">
-                Expense Name
+                Income Name
               </label>
               <input
                 type="text"
@@ -160,7 +131,7 @@ function ExpenseItem(props) {
                 {...register("expenseName")}
               />
               <label htmlFor="expense-date" className="form-label mt-2">
-                Expense Date
+                Income Date
               </label>
               <input
                 type="date"
@@ -179,19 +150,6 @@ function ExpenseItem(props) {
                 placeholder="amount money"
                 {...register("expenseAmount")}
               />
-              <label htmlFor="expense-category" className="form-label mt-2">
-                Categories
-              </label>
-              <select
-                name="category"
-                id="expense-category"
-                className="form-control"
-                {...register("expenseCategories")}
-              >
-                <option value="primaty">Primary</option>
-                <option value="secondary">Secondary</option>
-                <option value="tertiary">Tertiary</option>
-              </select>
             </form>
           </div>
         </Modal.Body>
@@ -221,4 +179,4 @@ function ExpenseItem(props) {
   );
 }
 
-export default ExpenseItem;
+export default IncomeItem;
