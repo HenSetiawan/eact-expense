@@ -2,32 +2,23 @@ import { Row, Col, Modal, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputText from "../components/form/InputText";
-import supabase from "../services/supabase";
+import { useDispatch } from "react-redux";
+import { insertIncome } from "../redux/features/income/incomeSlice";
 function App() {
   const [show, setShow] = useState(false);
-  const [income, setExpense] = useState([]);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
+  const dispatch = useDispatch();
+
   const handleRefresh = async () => {
-    try {
-      let { data: income, error } = await supabase.from("income").select("*");
-      if (error) {
-        console.error(error);
-        return error;
-      }
-      setExpense(income);
-    } catch (error) {
-      console.error(error);
-      return error;
-    }
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
+    dispatch(insertIncome(data));
   };
 
   useEffect(() => {
