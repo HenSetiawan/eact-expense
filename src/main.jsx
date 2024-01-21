@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import Home from './pages/Home'
 import Expense from './pages/Expense'
 import Income from './pages/Income'
+import Login from './pages/Login'
+import Auth from './pages/Auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css';
 import 'react-tippy/dist/tippy.css';
@@ -17,8 +19,12 @@ import {
 
 const router = createBrowserRouter([
   {
+    path: '/login',
+    element:<Login/>
+  },
+  {
     path: "/",
-    element: <App />,
+    element: <Auth><App/></Auth>,
     children: [
       {
         path: "/",
