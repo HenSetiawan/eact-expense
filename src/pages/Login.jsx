@@ -1,31 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin } from "../redux/features/auth/authSice";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import supabase from "../services/supabase";
-import { Navigate } from "react-router-dom";
 
 function Login() {
-  const [session, setSession] = useState(null);
-
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    console.log(user);
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
+  const session = useSelector((state) => state.auth.session);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+      dispatch(setLogin(session));
     });
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+      dispatch(setLogin(session));
     });
     return () => subscription.unsubscribe();
   }, []);

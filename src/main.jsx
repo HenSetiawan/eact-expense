@@ -7,7 +7,6 @@ import Home from './pages/Home'
 import Expense from './pages/Expense'
 import Income from './pages/Income'
 import Login from './pages/Login'
-import Auth from './pages/Auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css';
 import 'react-tippy/dist/tippy.css';
@@ -24,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Auth><App/></Auth>,
+    element: <App/>,
     children: [
       {
         path: "/",
