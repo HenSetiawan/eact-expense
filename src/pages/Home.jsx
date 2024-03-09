@@ -1,4 +1,5 @@
 import { fetchExpense } from "../redux/features/expense/expenseSlice";
+import { fetchIncome } from "../redux/features/income/incomeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import Balancecard from "../components/balance/index";
@@ -12,6 +13,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchExpense());
+    dispatch(fetchIncome());
   }, []);
 
   return (
